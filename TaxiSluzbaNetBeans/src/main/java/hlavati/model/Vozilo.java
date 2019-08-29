@@ -5,12 +5,19 @@
  */
 package hlavati.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author Luka
  */
-public class Vozilo extends Entitet {
+@Entity
+public class Vozilo extends Entitet implements Serializable {
 
+    @Id
+    private Integer sifra;
     private String marka;
     private String gorivo;
     private String snaga;

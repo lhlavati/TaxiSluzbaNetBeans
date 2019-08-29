@@ -8,6 +8,7 @@ package hlavati;
 import javax.swing.JOptionPane;
 import hlavati.controller.ObradaVozilo;
 import hlavati.model.Vozilo;
+import hlavati.utility.HibernateUtil;
 import hlavati.utility.MyException;
 
 /**
@@ -18,16 +19,16 @@ public class Start {
     
     public static void main(String[] args) {
         
-        Vozilo v = new Vozilo();
-        v.setMarka(JOptionPane.showInputDialog("Unesite marku"));
-        
-        ObradaVozilo ov = new ObradaVozilo();
-        
-        try {
-            ov.create(v);
-        } catch (MyException e) {
-            System.out.println(e.getPoruka());
-        }
-        
+//        Vozilo v = new Vozilo();
+//        v.setMarka(JOptionPane.showInputDialog("Unesite marku"));
+//        
+//        ObradaVozilo ov = new ObradaVozilo();
+//        
+//        try {
+//            ov.create(v);
+//        } catch (MyException e) {
+//            System.out.println(e.getPoruka());
+//        }
+          HibernateUtil.getSession();
     }
 }
