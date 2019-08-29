@@ -1,0 +1,7 @@
+
+MVC/pom.xml
+MVC/target/test-classes/.netbeans_automatic_build
+MVC/target/classes/.netbeans_automatic_build
+*.class
+*.lst
+/TaxiSluzbaNetBeans/target/
