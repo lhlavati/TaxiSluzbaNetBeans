@@ -22,12 +22,12 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
     }
 
     @Override
-    public Vozilo create(Vozilo entitet) throws MyException {
-        unosMarke(entitet);
+    public Vozilo create(Vozilo vozilo) throws MyException {
+        unosMarke(vozilo);
 
-        entitet = dao.spremi(entitet);
+        vozilo = dao.spremi(vozilo);
 
-        return entitet;
+        return vozilo;
     }
 
     @Override
@@ -42,13 +42,13 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
     }
 
     @Override
-    public void update(Vozilo entitet) throws MyException {
-        unosMarke(entitet);
-        dao.spremi(entitet);
+    public void update(Vozilo vozilo) throws MyException {
+        unosMarke(vozilo);
+        dao.spremi(vozilo);
     }
 
     @Override
-    public boolean delete(Vozilo entitet) {
+    public boolean delete(Vozilo vozilo) {
         System.out.println("Brišem iz baze!");
         return true;
     }
@@ -66,5 +66,18 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
         }
 
     }
-
+    
+    private void unosGorivo(Vozilo vozilo) throws MyException {
+        
+        if (vozilo.getGorivo() != null) {
+            vozilo.setMarka(vozilo.getGorivo().trim());
+        }
+        if (vozilo.getGorivo() == null || vozilo.getGorivo().length() == 0) {
+            throw new MyException("Gorivo mora biti unešeno");
+        }
+        if (vozilo.getGorivo().length() > 10) {
+            throw new MyException("Gorivo mora biti maksimalno 10 znakova!");
+        }
+        
+    }
 }
