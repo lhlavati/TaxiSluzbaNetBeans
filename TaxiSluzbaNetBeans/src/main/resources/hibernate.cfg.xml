@@ -39,7 +39,7 @@
         
         
         <!-- Ovdje navodimo naše mapirane klase -->
-        <mapping class="edunova.model.Vozilo" />
+        <mapping class="hlavati.model.Vozilo" />
         
         
     </session-factory>

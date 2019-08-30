@@ -23,7 +23,6 @@ public class HibernateUtil {
         if(session==null){
             try {
                 session = new Configuration().configure().buildSessionFactory().openSession();
-                
             } catch (Throwable e) {
                 //ovdeje će završiti ako imamo problema s hibernate.cfg.xml
                 throw new ExceptionInInitializerError(e);
