@@ -19,16 +19,18 @@ public class Start {
     
     public static void main(String[] args) {
         
-//        Vozilo v = new Vozilo();
-//        v.setMarka(JOptionPane.showInputDialog("Unesite marku"));
-//        
-//        ObradaVozilo ov = new ObradaVozilo();
-//        
-//        try {
-//            ov.create(v);
-//        } catch (MyException e) {
-//            System.out.println(e.getPoruka());
-//        }
+        Vozilo v = new Vozilo();
+        v.setMarka(JOptionPane.showInputDialog("Unesite marku"));
+        v.setGorivo(JOptionPane.showInputDialog("Unesite vrstu goriva"));
+        v.setSnaga(JOptionPane.showInputDialog("Unesite snagu vozila\nNpr. \"66 kW\""));
+        
+        ObradaVozilo ov = new ObradaVozilo();
+        
+        try {
+            ov.create(v);
+        } catch (MyException e) {
+            System.out.println(e.getPoruka());
+        }
           HibernateUtil.getSession();
     }
 }

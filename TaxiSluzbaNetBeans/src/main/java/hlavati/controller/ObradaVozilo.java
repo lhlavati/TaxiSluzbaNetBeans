@@ -24,6 +24,8 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
     @Override
     public Vozilo create(Vozilo vozilo) throws MyException {
         unosMarke(vozilo);
+        unosGorivo(vozilo);
+        unosSnaga(vozilo);
 
         vozilo = dao.spremi(vozilo);
 
@@ -44,6 +46,9 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
     @Override
     public void update(Vozilo vozilo) throws MyException {
         unosMarke(vozilo);
+        unosGorivo(vozilo);
+        unosSnaga(vozilo);
+        
         dao.spremi(vozilo);
     }
 
@@ -70,14 +75,34 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
     private void unosGorivo(Vozilo vozilo) throws MyException {
         
         if (vozilo.getGorivo() != null) {
-            vozilo.setMarka(vozilo.getGorivo().trim());
+            vozilo.setGorivo(vozilo.getGorivo().trim());
         }
         if (vozilo.getGorivo() == null || vozilo.getGorivo().length() == 0) {
             throw new MyException("Gorivo mora biti unešeno");
         }
-        if (vozilo.getGorivo().length() > 10) {
-            throw new MyException("Gorivo mora biti maksimalno 10 znakova!");
+        if (vozilo.getGorivo().length() > 25) {
+            throw new MyException("Gorivo mora biti maksimalno 25 znakova!");
         }
+        
+    }
+    
+    private void unosSnaga(Vozilo vozilo) throws MyException {
+        
+        if (vozilo.getSnaga() != null) {
+            vozilo.setSnaga(vozilo.getSnaga().trim());
+        }
+        if (vozilo.getSnaga() == null || vozilo.getSnaga().length() == 0) {
+            throw new MyException("Snaga mora biti unešeno");
+        }
+        if (vozilo.getSnaga().length() > 8) {
+            throw new MyException("Snaga mora biti maksimalno 8 znakova!");
+        }
+        
+    }
+    
+    private void unosABS(Vozilo vozilo) throws MyException {
+        
+        
         
     }
 }
