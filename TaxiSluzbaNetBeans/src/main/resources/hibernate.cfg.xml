@@ -13,7 +13,7 @@
         <property name="connection.username">edunova</property>
         <property name="connection.password">edunova</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">5</property>
         <!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MariaDBDialect</property>
         <!-- Echo the SQL to stdout -->
@@ -29,7 +29,7 @@
             create-drop: drop the schema at the end of the session. 
             1. puta create, poslije update
             -->
-        <property name="hbm2ddl.auto">create-drop</property>
+        <property name="hbm2ddl.auto">update</property>
         <!-- dbcp connection pool configuration -->
         <property name="hibernate.dbcp.initialSize">5</property>
         <property name="hibernate.dbcp.maxTotal">20</property>
@@ -40,6 +40,9 @@
         
         <!-- Ovdje navodimo naše mapirane klase -->
         <mapping class="hlavati.model.Vozilo" />
+        <mapping class="hlavati.model.Vozac" />
+        <mapping class="hlavati.model.Vozi" />
+        <mapping class="hlavati.model.Voznja" />
         
         
     </session-factory>

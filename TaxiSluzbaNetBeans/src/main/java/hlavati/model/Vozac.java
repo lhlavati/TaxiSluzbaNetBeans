@@ -5,11 +5,15 @@
  */
 package hlavati.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+
 /**
  *
  * @author Luka
  */
-public class Vozac extends Entitet{
+@Entity
+public class Vozac extends Entitet implements Serializable{
 
     private String ime;
     private String prezime;
@@ -17,6 +21,7 @@ public class Vozac extends Entitet{
     private String spol;
 
     public Vozac() {
+        super();
     }
 
     public Vozac(Integer sifra, String ime, String prezime, String oib, String spol) {

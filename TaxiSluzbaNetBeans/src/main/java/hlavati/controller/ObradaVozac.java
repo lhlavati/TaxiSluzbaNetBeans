@@ -10,36 +10,26 @@ import javax.swing.JOptionPane;
 import hlavati.model.Vozac;
 import hlavati.model.Vozilo;
 import hlavati.utility.MyException;
-import hlavati.utility.ObradaInterface;
 
 /**
  *
  * @author Luka
  */
-public class ObradaVozac extends Obrada<Vozac> implements ObradaInterface<Vozac> {
+public class ObradaVozac extends Obrada<Vozac> {
 
-    public ObradaVozac() {
-        super();
+    public List<Vozac> getVozaci(){
+        return session.createQuery("from Vozac").list();
     }
-
+    
     @Override
-    public Vozac create(Vozac entitet) throws MyException {
+    protected void kontrolaSpremi() throws MyException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Vozac> read() {
+    protected void kontrolaBrisi() throws MyException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void update(Vozac entitet) throws MyException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean delete(Vozac entitet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

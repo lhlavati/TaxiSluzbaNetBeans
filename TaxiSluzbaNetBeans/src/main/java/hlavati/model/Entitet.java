@@ -5,12 +5,19 @@
  */
 package hlavati.model;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 /**
  *
  * @author Luka
  */
-public class Entitet {
+@MappedSuperclass
+public abstract class Entitet {
 
+    @Id
+    @GeneratedValue
     private Integer sifra;
 
     public Entitet() {

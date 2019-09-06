@@ -26,6 +26,7 @@ public class Vozilo extends Entitet implements Serializable {
     private Integer brojVozila;
 
     public Vozilo() {
+        super();
     }
 
     public Vozilo(Integer sifra, String marka, String gorivo, String snaga, Boolean abs, String godiste, Integer brojVozila) {

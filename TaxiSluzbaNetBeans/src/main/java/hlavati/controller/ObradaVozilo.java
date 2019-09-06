@@ -5,59 +5,34 @@
  */
 package hlavati.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import hlavati.model.Vozilo;
 import hlavati.utility.MyException;
-import hlavati.utility.ObradaInterface;
 
 /**
  *
  * @author Luka
  */
-public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozilo> {
+public class ObradaVozilo extends Obrada<Vozilo> {
 
-    public ObradaVozilo() {
-        super();
+    public List<Vozilo> getVozila(){
+        return session.createQuery("from Vozilo").list();
     }
-
+    
     @Override
-    public Vozilo create(Vozilo vozilo) throws MyException {
+    protected void kontrolaSpremi() throws MyException {
+        Vozilo vozilo = new Vozilo();
         unosMarke(vozilo);
         unosGorivo(vozilo);
         unosSnaga(vozilo);
-
-        vozilo = dao.spremi(vozilo);
-
-        return vozilo;
+        unosABS(vozilo);
     }
 
     @Override
-    public List<Vozilo> read() {
+    protected void kontrolaBrisi() throws MyException {
         
-        List<Vozilo> vozila = new ArrayList<>();
-        Vozilo vozilo = new Vozilo(1, "Škoda", "benzin", "66 kW", true, "2014", 1);
-        
-        vozila.add(vozilo);
-        
-        return vozila;
     }
-
-    @Override
-    public void update(Vozilo vozilo) throws MyException {
-        unosMarke(vozilo);
-        unosGorivo(vozilo);
-        unosSnaga(vozilo);
-        
-        dao.spremi(vozilo);
-    }
-
-    @Override
-    public boolean delete(Vozilo vozilo) {
-        System.out.println("Brišem iz baze!");
-        return true;
-    }
-
+    
     private void unosMarke(Vozilo vozilo) throws MyException {
 
         if (vozilo.getMarka() != null) {
@@ -105,4 +80,6 @@ public class ObradaVozilo extends Obrada<Vozilo> implements ObradaInterface<Vozi
         
         
     }
+
+    
 }
