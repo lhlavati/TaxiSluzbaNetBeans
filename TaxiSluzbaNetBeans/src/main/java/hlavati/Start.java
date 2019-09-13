@@ -5,6 +5,7 @@
  */
 package hlavati;
 
+import hlavati.test.TestOperater;
 import hlavati.test.TestVozilo;
 
 /**
@@ -15,7 +16,8 @@ public class Start {
     
     public static void main(String[] args) {
         
-        TestVozilo.test();
+//        TestVozilo.test();
+        TestOperater.test();
         
     }
 }
