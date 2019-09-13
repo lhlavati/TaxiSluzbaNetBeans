@@ -6,11 +6,13 @@
 package hlavati.model;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Luka
  */
+@Entity
 public class Operater extends Vozac implements Serializable {
     
     private String lozinka;
