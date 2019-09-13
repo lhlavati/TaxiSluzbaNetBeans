@@ -5,20 +5,18 @@
  */
 package hlavati.controller;
 
-import java.util.List;
-import javax.swing.JOptionPane;
-import hlavati.model.Vozac;
-import hlavati.model.Vozilo;
+import hlavati.model.Voznja;
 import hlavati.utility.MyException;
+import java.util.List;
 
 /**
  *
  * @author Luka
  */
-public class ObradaVozac<T extends Vozac> extends Obrada<T> {
+public class ObradaVoznja extends Obrada<Voznja> {
 
-    public List<Vozac> getVozaci(){
-        return session.createQuery("from Vozac").list();
+    public List<Voznja> getVozila(){
+        return session.createQuery("from Voznja").list();
     }
     
     @Override
@@ -30,6 +28,5 @@ public class ObradaVozac<T extends Vozac> extends Obrada<T> {
     protected void kontrolaBrisi() throws MyException {
         
     }
-
     
 }
