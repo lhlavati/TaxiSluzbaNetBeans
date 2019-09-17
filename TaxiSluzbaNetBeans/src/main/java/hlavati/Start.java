@@ -7,6 +7,8 @@ package hlavati;
 
 import hlavati.test.TestOperater;
 import hlavati.test.TestVozilo;
+import hlavati.view.Autorizacija;
+import hlavati.view.SplashScreen;
 
 /**
  *
@@ -17,7 +19,9 @@ public class Start {
     public static void main(String[] args) {
         
 //        TestVozilo.test();
-        TestOperater.test();
+//        TestOperater.test();
+//        new Autorizacija().setVisible(true);
+        new SplashScreen().setVisible(true);
         
     }
 }
