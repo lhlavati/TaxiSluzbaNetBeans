@@ -5,6 +5,10 @@
  */
 package hlavati.view;
 
+import hlavati.utility.Utility;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Luka
@@ -16,6 +20,9 @@ public class Izbornik extends javax.swing.JFrame {
      */
     public Izbornik() {
         initComponents();
+        setTitle(Utility.getNazivAplikacije());
+        new Vrijeme().start();
+        new RadnoVrijeme().start();
     }
 
     /**
@@ -27,23 +34,82 @@ public class Izbornik extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblSat = new javax.swing.JLabel();
+        lblRadnoVrijeme = new javax.swing.JLabel();
+        lblDatum = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblSat.setText("Sat");
+
+        lblRadnoVrijeme.setText("RadnoVrijeme");
+
+        lblDatum.setText("Datum");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblRadnoVrijeme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDatum)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblSat)
+                        .addGap(8, 8, 8)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(255, Short.MAX_VALUE)
+                .addComponent(lblSat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRadnoVrijeme)
+                    .addComponent(lblDatum))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private class Vrijeme extends Thread {
+
+        SimpleDateFormat dfSat = new SimpleDateFormat(Utility.getVrijeme());
+        SimpleDateFormat dfDatum = new SimpleDateFormat("dd.MM.YYYY.");
+
+        @Override
+        public void run() {
+
+            lblSat.setText(dfSat.format(new Date()));
+            lblDatum.setText(dfDatum.format(new Date()));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+
+            }
+            run();
+        }
+
+    }
+
+    private class RadnoVrijeme extends Thread{
+        
+        public void run(){
+           
+            lblRadnoVrijeme.setText("00:00:00");
+            
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblDatum;
+    private javax.swing.JLabel lblRadnoVrijeme;
+    private javax.swing.JLabel lblSat;
     // End of variables declaration//GEN-END:variables
 }
