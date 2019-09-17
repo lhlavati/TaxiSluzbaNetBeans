@@ -15,10 +15,6 @@ public class Utility {
         return "Taxi služba APP V1.0";
     }
     
-    public static String getFormatDatumaIVremena(){
-        return "dd. MM. YYYY. HH:mm:ss";
-    }
-    
     public static boolean isDev(){
         return true;
     }
