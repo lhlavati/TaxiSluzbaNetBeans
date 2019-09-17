@@ -79,7 +79,7 @@ public class Izbornik extends javax.swing.JFrame {
 
     private class Vrijeme extends Thread {
 
-        SimpleDateFormat dfSat = new SimpleDateFormat(Utility.getVrijeme());
+        SimpleDateFormat dfSat = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat dfDatum = new SimpleDateFormat("dd.MM.YYYY.");
 
         @Override
