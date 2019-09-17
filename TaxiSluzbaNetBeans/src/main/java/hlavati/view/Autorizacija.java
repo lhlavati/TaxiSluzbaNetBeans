@@ -49,6 +49,12 @@ public class Autorizacija extends javax.swing.JFrame {
 
         jLabel1.setText("Prezime");
 
+        txtPrezime.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPrezimeKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Lozinka");
 
         btnAutoriziraj.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -56,6 +62,12 @@ public class Autorizacija extends javax.swing.JFrame {
         btnAutoriziraj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAutorizirajActionPerformed(evt);
+            }
+        });
+
+        pswLozinka.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pswLozinkaKeyPressed(evt);
             }
         });
 
@@ -145,6 +157,16 @@ public class Autorizacija extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_btnAutorizirajActionPerformed
+
+    private void txtPrezimeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrezimeKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnAutorizirajActionPerformed(null);
+        }
+    }//GEN-LAST:event_txtPrezimeKeyPressed
+
+    private void pswLozinkaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pswLozinkaKeyPressed
+        txtPrezimeKeyPressed(evt);
+    }//GEN-LAST:event_pswLozinkaKeyPressed
 
     private void greska(JComponent komponenta, String poruka) {
         JOptionPane.showMessageDialog(null, poruka);
