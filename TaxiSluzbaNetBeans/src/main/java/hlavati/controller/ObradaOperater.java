@@ -18,6 +18,12 @@ public class ObradaOperater extends ObradaVozac<Operater> {
         return session.createQuery("from Operater").list();
     }
     
+    public Operater getOperater(String prezime){
+        
+        return (Operater)session.createQuery("from Operater a where a.prezime=:prezime ").setParameter("prezime", prezime).uniqueResult();
+        
+    }
+    
     
     
 }
