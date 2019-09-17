@@ -28,6 +28,10 @@ public class Autorizacija extends javax.swing.JFrame {
     public Autorizacija() {
         initComponents();
         setTitle(Utility.getNazivAplikacije());
+        if(Utility.isDev()){
+            txtPrezime.setText("Hlavati");
+            pswLozinka.setText("12345");
+        }
     }
 
     /**
