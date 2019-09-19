@@ -6,6 +6,7 @@
 package hlavati.view;
 
 import hlavati.controller.ObradaVozac;
+import java.awt.Color;
 
 /**
  *
@@ -19,6 +20,7 @@ public class SplashScreen extends javax.swing.JFrame {
         initComponents();
         Ucitavanje ucitavanje = new Ucitavanje();
         ucitavanje.start();
+        setBackground(new Color(0,0,0,0));
     }
     
     private class Ucitavanje extends Thread{
