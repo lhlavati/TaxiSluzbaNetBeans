@@ -5,6 +5,9 @@
  */
 package hlavati.view;
 
+import hlavati.controller.ObradaOperater;
+import hlavati.model.Operater;
+import hlavati.model.Vozac;
 import hlavati.utility.Utility;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +26,7 @@ public class Izbornik extends javax.swing.JFrame {
         setTitle(Utility.getNazivAplikacije());
         new Vrijeme().start();
         new RadnoVrijeme().start();
+        Pozdrav();
     }
 
     /**
@@ -35,25 +39,42 @@ public class Izbornik extends javax.swing.JFrame {
     private void initComponents() {
 
         lblSat = new javax.swing.JLabel();
-        lblRadnoVrijeme = new javax.swing.JLabel();
         lblDatum = new javax.swing.JLabel();
+        lblRadnoVrijeme = new javax.swing.JLabel();
+        lblPozdrav = new javax.swing.JLabel();
+        lblOperater = new javax.swing.JLabel();
+        lblVrijemeRada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblSat.setText("Sat");
 
-        lblRadnoVrijeme.setText("RadnoVrijeme");
-
         lblDatum.setText("Datum");
+
+        lblRadnoVrijeme.setText("00:00:00");
+
+        lblPozdrav.setText("Dobar dan,");
+
+        lblOperater.setText("Luka Hlavati!");
+
+        lblVrijemeRada.setText("Vrijeme rada:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblRadnoVrijeme)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblVrijemeRada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblRadnoVrijeme))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPozdrav)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblOperater)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDatum)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -65,11 +86,15 @@ public class Izbornik extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(255, Short.MAX_VALUE)
-                .addComponent(lblSat)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSat)
+                    .addComponent(lblPozdrav)
+                    .addComponent(lblOperater))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDatum)
                     .addComponent(lblRadnoVrijeme)
-                    .addComponent(lblDatum))
+                    .addComponent(lblVrijemeRada))
                 .addContainerGap())
         );
 
@@ -97,19 +122,56 @@ public class Izbornik extends javax.swing.JFrame {
 
     }
 
-    private class RadnoVrijeme extends Thread{
-        
-        public void run(){
-           
-            lblRadnoVrijeme.setText("00:00:00");
-            
+    private class RadnoVrijeme extends Thread {
+
+        int h = 0;
+        int m = 0;
+        int s = 0;
+
+        @Override
+        public void run() {
+            if (s > 59) {
+                s = 0;
+                m++;
+            }
+            if (m > 59) {
+                m = 0;
+                h++;
+            }
+
+            lblRadnoVrijeme.setText(String.format("%02d:%02d:%02d", h, m, s));
+            s++;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+
+            run();
+        }
+
+    }
+
+    private void Pozdrav() {
+        Operater o = new Operater();
+        if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 12) {
+            lblPozdrav.setText("Dobro jutro,");
+            lblOperater.setText(o.getIme() + " " + o.getPrezime() + "!");
+        } else if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 24 || Integer.parseInt(lblSat.getText().substring(0, 2)) >= 18) {
+            lblPozdrav.setText("Dobra večer,");
+            lblOperater.setText(o.getIme() + " " + o.getPrezime() + "!");
+        } else {
+            lblPozdrav.setText("Dobar dan,");
+            lblOperater.setText(o.getIme() + " " + o.getPrezime() + "!");
         }
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblDatum;
+    private javax.swing.JLabel lblOperater;
+    private javax.swing.JLabel lblPozdrav;
     private javax.swing.JLabel lblRadnoVrijeme;
     private javax.swing.JLabel lblSat;
+    private javax.swing.JLabel lblVrijemeRada;
     // End of variables declaration//GEN-END:variables
 }

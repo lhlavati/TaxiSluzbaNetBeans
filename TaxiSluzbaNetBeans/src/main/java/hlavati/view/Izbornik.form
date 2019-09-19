@@ -23,10 +23,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblRadnoVrijeme" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="279" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblVrijemeRada" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblRadnoVrijeme" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblPozdrav" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblOperater" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="226" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblDatum" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
@@ -42,11 +53,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="255" max="32767" attributes="0"/>
-              <Component id="lblSat" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblSat" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPozdrav" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblOperater" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblRadnoVrijeme" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblDatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRadnoVrijeme" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblVrijemeRada" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -59,14 +75,29 @@
         <Property name="text" type="java.lang.String" value="Sat"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblRadnoVrijeme">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="RadnoVrijeme"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblDatum">
       <Properties>
         <Property name="text" type="java.lang.String" value="Datum"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblRadnoVrijeme">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="00:00:00"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPozdrav">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dobar dan,"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblOperater">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Luka Hlavati!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblVrijemeRada">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Vrijeme rada:"/>
       </Properties>
     </Component>
   </SubComponents>
