@@ -12,7 +12,7 @@ package hlavati.utility;
 public class Utility {
     
     public static String getNazivAplikacije(){
-        return "Taxi služba APP V1.0";
+        return "Taxi služba APP";
     }
     
     public static boolean isDev(){
