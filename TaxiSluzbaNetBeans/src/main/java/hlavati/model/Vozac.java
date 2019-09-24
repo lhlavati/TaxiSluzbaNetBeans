@@ -64,4 +64,11 @@ public class Vozac extends Entitet implements Serializable{
         this.spol = spol;
     }
 
+    @Override
+    public String toString() {
+        return getIme() + " " + getPrezime();
+    }
+
+    
+    
 }
