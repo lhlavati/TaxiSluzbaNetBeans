@@ -84,6 +84,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
             JOptionPane.showMessageDialog(null, "Obavezan spol!");
             return false;
         }
+        
         if(rbtnM.isSelected()){
             v.setSpol(rbtnM.getText());
         }
@@ -93,11 +94,11 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         if(rbtnO.isSelected()){
             v.setSpol(rbtnM.getText());
         }
+        
         return true;
     }
     
     private boolean kontrolaOIB(Vozac v) {
-        
         return true;
     }
     
@@ -112,6 +113,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     protected void postaviVrijednosti(Vozac v) {
         txtIme.setText(v.getIme());
         txtPrezime.setText(v.getPrezime());
+        
     }
     
 
@@ -166,27 +168,12 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
 
         btnGroup.add(rbtnM);
         rbtnM.setText("M");
-        rbtnM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnMActionPerformed(evt);
-            }
-        });
 
         btnGroup.add(rbtnZ);
         rbtnZ.setText("Ž");
-        rbtnZ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnZActionPerformed(evt);
-            }
-        });
 
         btnGroup.add(rbtnO);
         rbtnO.setText("Ostalo");
-        rbtnO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnOActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Lozinka");
 
@@ -337,12 +324,6 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
             JOptionPane.showMessageDialog(null, "Prvo odaberite stavku");
             return;
         }
-        /*
-        if(s.getGrupe().size()>0){
-                 JOptionPane.showMessageDialog(null, "Ne možete obrisati ovu grupu");
-            return;
-            }
-        */
         if(JOptionPane.showConfirmDialog(
                 null, //roditelj, bude null
                 "Sigurno obrisati " + v.getIme() + " " + v.getPrezime() + "?", //tijelo dijaloga
@@ -374,18 +355,6 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         }
         postaviVrijednosti(v);
     }//GEN-LAST:event_listaValueChanged
-
-    private void rbtnMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMActionPerformed
-        spol = rbtnM.getText();
-    }//GEN-LAST:event_rbtnMActionPerformed
-
-    private void rbtnZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnZActionPerformed
-        spol = rbtnZ.getText();
-    }//GEN-LAST:event_rbtnZActionPerformed
-
-    private void rbtnOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOActionPerformed
-        spol = rbtnO.getText();
-    }//GEN-LAST:event_rbtnOActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
