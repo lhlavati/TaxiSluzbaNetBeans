@@ -87,4 +87,9 @@ public class Vozilo extends Entitet implements Serializable {
         this.brojVozila = brojVozila;
     }
 
+    @Override
+    public String toString() {
+        return "" + getMarka();
+    }
+    
 }
