@@ -35,43 +35,43 @@ public class ObradaVozilo extends Obrada<Vozilo> {
     
     private void unosMarke(Vozilo vozilo) throws MyException {
 
-        if (vozilo.getMarka() != null) {
-            vozilo.setMarka(vozilo.getMarka().trim());
-        }
-        if (vozilo.getMarka() == null || vozilo.getMarka().length() == 0) {
-            throw new MyException("Marka mora biti unešena");
-        }
-        if (vozilo.getMarka().length() > 50) {
-            throw new MyException("Marka mora biti maksimalno 50 znakova!");
-        }
+//        if (vozilo.getMarka() != null) {
+//            vozilo.setMarka(vozilo.getMarka().trim());
+//        }
+//        if (vozilo.getMarka() == null || vozilo.getMarka().length() == 0) {
+//            throw new MyException("Marka mora biti unešena");
+//        }
+//        if (vozilo.getMarka().length() > 50) {
+//            throw new MyException("Marka mora biti maksimalno 50 znakova!");
+//        }
 
     }
     
     private void unosGorivo(Vozilo vozilo) throws MyException {
         
-        if (vozilo.getGorivo() != null) {
-            vozilo.setGorivo(vozilo.getGorivo().trim());
-        }
-        if (vozilo.getGorivo() == null || vozilo.getGorivo().length() == 0) {
-            throw new MyException("Gorivo mora biti unešeno");
-        }
-        if (vozilo.getGorivo().length() > 25) {
-            throw new MyException("Gorivo mora biti maksimalno 25 znakova!");
-        }
-        
+//        if (vozilo.getGorivo() != null) {
+//            vozilo.setGorivo(vozilo.getGorivo().trim());
+//        }
+//        if (vozilo.getGorivo() == null || vozilo.getGorivo().length() == 0) {
+//            throw new MyException("Gorivo mora biti unešeno");
+//        }
+//        if (vozilo.getGorivo().length() > 25) {
+//            throw new MyException("Gorivo mora biti maksimalno 25 znakova!");
+//        }
+//        
     }
     
     private void unosSnaga(Vozilo vozilo) throws MyException {
         
-        if (vozilo.getSnaga() != null) {
-            vozilo.setSnaga(vozilo.getSnaga().trim());
-        }
-        if (vozilo.getSnaga() == null || vozilo.getSnaga().length() == 0) {
-            throw new MyException("Snaga mora biti unešeno");
-        }
-        if (vozilo.getSnaga().length() > 8) {
-            throw new MyException("Snaga mora biti maksimalno 8 znakova!");
-        }
+//        if (vozilo.getSnaga() != null) {
+//            vozilo.setSnaga(vozilo.getSnaga().trim());
+//        }
+//        if (vozilo.getSnaga() == null || vozilo.getSnaga().length() == 0) {
+//            throw new MyException("Snaga mora biti unešeno");
+//        }
+//        if (vozilo.getSnaga().length() > 8) {
+//            throw new MyException("Snaga mora biti maksimalno 8 znakova!");
+//        }
         
     }
     
