@@ -13,62 +13,14 @@ import javax.persistence.Entity;
  * @author Luka
  */
 @Entity
-public class Vozac extends Entitet implements Serializable{
-
-    private String ime;
-    private String prezime;
-    private String oib;
-    private String spol;
+public class Vozac extends Osoba implements Serializable{
 
     public Vozac() {
         super();
     }
 
-    public Vozac(Integer sifra, String ime, String prezime, String oib, String spol) {
-        super(sifra);
-        this.ime = ime;
-        this.prezime = prezime;
-        this.oib = oib;
-        this.spol = spol;
+    public Vozac(String ime, String prezime, String oib, Integer sifra) {
+        super(ime, prezime, oib, sifra);
     }
 
-    public String getIme() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public String getPrezime() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
-
-    public String getOib() {
-        return oib;
-    }
-
-    public void setOib(String oib) {
-        this.oib = oib;
-    }
-
-    public String getSpol() {
-        return spol;
-    }
-
-    public void setSpol(String spol) {
-        this.spol = spol;
-    }
-
-    @Override
-    public String toString() {
-        return getIme() + " " + getPrezime();
-    }
-
-    
-    
 }

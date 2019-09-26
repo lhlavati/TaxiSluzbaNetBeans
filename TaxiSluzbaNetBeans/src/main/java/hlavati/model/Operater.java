@@ -13,15 +13,15 @@ import javax.persistence.Entity;
  * @author Luka
  */
 @Entity
-public class Operater extends Vozac implements Serializable {
+public class Operater extends Osoba implements Serializable {
     
     private String lozinka;
 
     public Operater() {
     }
 
-    public Operater(Integer sifra, String ime, String prezime, String oib, String spol, String lozinka) {
-        super(sifra, ime, prezime, oib, spol);
+    public Operater(Integer sifra, String ime, String prezime, String oib, String lozinka) {
+        super(ime, prezime, oib, sifra);
         this.lozinka = lozinka;
     }
 

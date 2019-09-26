@@ -5,26 +5,14 @@
  */
 package hlavati.controller;
 
-import hlavati.model.Operater;
 import hlavati.model.Osoba;
 import hlavati.utility.MyException;
-import java.util.List;
 
 /**
  *
  * @author Luka
  */
-public class ObradaOperater extends ObradaOsoba<Operater> {
-    
-    public List<Operater> getEntiteti() {
-        return session.createQuery("from Operater").list();
-    }
-    
-    public Operater getOperater(String prezime){
-        
-        return (Operater)session.createQuery("from Operater a where a.prezime=:prezime ").setParameter("prezime", prezime).uniqueResult();
-        
-    }
+public abstract class ObradaOsoba<T extends Osoba> extends Obrada<T> {
 
     @Override
     protected void kontrolaSpremi() throws MyException {
@@ -35,6 +23,8 @@ public class ObradaOperater extends ObradaOsoba<Operater> {
     protected void kontrolaBrisi() throws MyException {
         
     }
+
+    
     
     
     

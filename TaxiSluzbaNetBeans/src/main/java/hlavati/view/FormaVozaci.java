@@ -7,11 +7,13 @@ package hlavati.view;
 
 import hlavati.controller.Obrada;
 import hlavati.controller.ObradaVozac;
+import hlavati.model.Operater;
 import hlavati.model.Vozac;
 import hlavati.utility.MyException;
 import hlavati.utility.Utility;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -19,7 +21,6 @@ import javax.swing.JOptionPane;
  */
 public class FormaVozaci extends PomocneMetode<Vozac> {
 
-    private String spol;
     private ObradaVozac obrada;
     
     /**
@@ -58,7 +59,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
 
     @Override
     protected boolean kontrola(Vozac v) {
-        return kontrolaIme(v) && kontrolaPrezime(v) && kontrolaOIB(v) && kontrolaLozinka(v);
+        return kontrolaIme(v) && kontrolaPrezime(v) && kontrolaOIB(v) && kontrolaSpola(v);
     }
     
     private boolean kontrolaIme(Vozac v){
@@ -80,34 +81,56 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     }
     
     private boolean kontrolaSpola(Vozac v){
-        if(btnGroup.isSelected(btnGroup.getSelection())){
-            JOptionPane.showMessageDialog(null, "Obavezan spol!");
-            return false;
-        }
         
         if(rbtnM.isSelected()){
             v.setSpol(rbtnM.getText());
         }
         if(rbtnZ.isSelected()){
-            v.setSpol(rbtnM.getText());
+            v.setSpol(rbtnZ.getText());
         }
         if(rbtnO.isSelected()){
-            v.setSpol(rbtnM.getText());
+            v.setSpol(rbtnO.getText());
         }
         
         return true;
     }
     
     private boolean kontrolaOIB(Vozac v) {
+        if(!checkOIB(txtOIB.getText())){
+            JOptionPane.showMessageDialog(null, "OIB nije važeći!");
+            return false;
+        }
+        v.setOib(txtOIB.getText());
         return true;
     }
     
-    private boolean kontrolaLozinka(Vozac v) {
-        if(pswLozinka.getPassword().length == 0){
-            JOptionPane.showMessageDialog(null, "Obavezan unos lozinke!");
+    public static boolean checkOIB(String oib) {
+
+        if (oib.length() != 11)
+            return false;
+
+        try {
+            Long.parseLong(oib);
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return true;
+
+        int a = 10;
+        for (int i = 0; i < 10; i++) {
+            a = a + Integer.parseInt(oib.substring(i, i+1));
+            a = a % 10;
+            if (a == 0)
+                a = 10;
+            a *= 2;
+            a = a % 11;
+        }
+        int kontrolni = 11 - a;
+        if (kontrolni == 10)
+            kontrolni = 0;
+
+        return kontrolni == Integer.parseInt(oib.substring(10));
     }
+    
     
     @Override
     protected void postaviVrijednosti(Vozac v) {
@@ -140,8 +163,6 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         rbtnM = new javax.swing.JRadioButton();
         rbtnZ = new javax.swing.JRadioButton();
         rbtnO = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
-        pswLozinka = new javax.swing.JPasswordField();
         btnDodaj = new javax.swing.JButton();
         btnPromjeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
@@ -175,8 +196,6 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         btnGroup.add(rbtnO);
         rbtnO.setText("Ostalo");
 
-        jLabel5.setText("Lozinka");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -195,15 +214,8 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
                             .addComponent(jLabel2)
                             .addComponent(txtPrezime, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(133, 133, 133))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(pswLozinka, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                    .addComponent(txtOIB))
-                                .addGap(29, 29, 29)))
+                        .addComponent(txtOIB, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(rbtnM, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtnZ, javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,14 +242,10 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
                     .addComponent(txtOIB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtnM))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(rbtnZ))
+                .addComponent(rbtnZ)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pswLozinka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbtnO))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(rbtnO)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         btnDodaj.setText("Dodaj");
@@ -294,7 +302,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
                             .addComponent(btnDodaj)
                             .addComponent(btnPromjeni)
                             .addComponent(btnObrisi))
-                        .addGap(0, 27, Short.MAX_VALUE))
+                        .addGap(0, 28, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -365,11 +373,9 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Vozac> lista;
-    private javax.swing.JPasswordField pswLozinka;
     private javax.swing.JRadioButton rbtnM;
     private javax.swing.JRadioButton rbtnO;
     private javax.swing.JRadioButton rbtnZ;
