@@ -7,7 +7,6 @@ package hlavati.view;
 
 import hlavati.controller.ObradaOperater;
 import hlavati.model.Operater;
-import hlavati.model.Vozac;
 import hlavati.utility.Utility;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -228,13 +227,12 @@ public class Izbornik extends javax.swing.JFrame {
     }
 
     private void Pozdrav() {
-        Operater o = new Operater();
         if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 12) {
-            lblPozdrav.setText("Dobro jutro, " + o.getIme() + " " + o.getPrezime() + "!");
+            lblPozdrav.setText("Dobro jutro!");
         } else if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 24 && Integer.parseInt(lblSat.getText().substring(0, 2)) >= 18) {
-            lblPozdrav.setText("Dobra večer, " + o.getIme() + " " + o.getPrezime() + "!");
+            lblPozdrav.setText("Dobra večer!");
         } else {
-            lblPozdrav.setText("Dobar dan, " + o.getIme() + " " + o.getPrezime() + "!");
+            lblPozdrav.setText("Dobar dan!");
         }
 
     }

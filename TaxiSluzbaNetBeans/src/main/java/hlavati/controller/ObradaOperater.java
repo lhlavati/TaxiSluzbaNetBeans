@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ObradaOperater extends ObradaOsoba<Operater> {
     
-    public List<Operater> getEntiteti() {
+    public List<Operater> getOperateri() {
         return session.createQuery("from Operater").list();
     }
     
