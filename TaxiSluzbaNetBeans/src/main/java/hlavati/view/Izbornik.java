@@ -230,11 +230,11 @@ public class Izbornik extends javax.swing.JFrame {
     private void Pozdrav() {
         Operater o = new Operater();
         if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 12) {
-            lblPozdrav.setText("Dobro jutro!");
+            lblPozdrav.setText("Dobro jutro, " + o.getIme() + " " + o.getPrezime() + "!");
         } else if (Integer.parseInt(lblSat.getText().substring(0, 2)) < 24 && Integer.parseInt(lblSat.getText().substring(0, 2)) >= 18) {
-            lblPozdrav.setText("Dobra večer!");
+            lblPozdrav.setText("Dobra večer, " + o.getIme() + " " + o.getPrezime() + "!");
         } else {
-            lblPozdrav.setText("Dobar dan!");
+            lblPozdrav.setText("Dobar dan, " + o.getIme() + " " + o.getPrezime() + "!");
         }
 
     }

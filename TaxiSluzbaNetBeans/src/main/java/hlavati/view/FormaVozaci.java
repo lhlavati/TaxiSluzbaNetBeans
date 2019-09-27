@@ -136,7 +136,16 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     protected void postaviVrijednosti(Vozac v) {
         txtIme.setText(v.getIme());
         txtPrezime.setText(v.getPrezime());
-        
+        if(v.getSpol().equals(rbtnM.getText())){
+            rbtnM.setSelected(true);
+        }
+        if(v.getSpol().equals(rbtnZ.getText())){
+            rbtnZ.setSelected(true);
+        }
+        if(v.getSpol().equals(rbtnO.getText())){
+            rbtnO.setSelected(true);
+        }
+        txtOIB.setText(v.getOib());
     }
     
 
