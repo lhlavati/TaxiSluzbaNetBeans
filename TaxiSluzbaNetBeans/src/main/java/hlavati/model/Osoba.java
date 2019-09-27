@@ -64,5 +64,10 @@ public abstract class Osoba extends Entitet {
         this.spol = spol;
     }
 
+    @Override
+    public String toString() {
+        return getIme() + " " + getPrezime();
+    }
+
     
 }
