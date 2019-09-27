@@ -67,6 +67,10 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
             JOptionPane.showMessageDialog(null, "Obavezno ime!");
             return false;
         }
+        if(txtIme.getText().matches(".*\\d.*")){
+            JOptionPane.showMessageDialog(null, "Ime ne može sadržavati broj!");
+            return false;
+        }
         v.setIme(txtIme.getText());
         return true;
     }
@@ -74,6 +78,10 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     private boolean kontrolaPrezime(Vozac v) {
         if(txtPrezime.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(null, "Obavezno prezime!");
+            return false;
+        }
+        if(txtPrezime.getText().matches(".*\\d.*")){
+            JOptionPane.showMessageDialog(null, "Prezime ne može sadržavati broj!");
             return false;
         }
         v.setPrezime(txtPrezime.getText());
