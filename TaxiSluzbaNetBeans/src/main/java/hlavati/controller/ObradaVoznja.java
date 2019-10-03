@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ObradaVoznja extends Obrada<Voznja> {
 
-    public List<Voznja> getVozila(){
+    public List<Voznja> getVoznje(){
         return session.createQuery("from Voznja").list();
     }
     
