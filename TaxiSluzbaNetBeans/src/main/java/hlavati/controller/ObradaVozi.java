@@ -20,7 +20,11 @@ public class ObradaVozi extends Obrada<Vozi> {
     }
     
     public List<Vozi> getVozi(String uvjet){
-        return session.createQuery("from Vozi a where a.vozac like :uvjet or a.vozilo like :uvjet").setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+        return session.createQuery("from Vozi as a inner join a.vozac " +
+                                   "inner join a.vozilo " + 
+                                   "where a.vozac.ime like :uvjet or a.vozac.prezime like :uvjet " +
+                                   "or a.vozilo.brojVozila like :uvjet or a.vozilo.marka like :uvjet")
+                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
     }
     
     @Override
