@@ -237,10 +237,11 @@ public class FormaVozi extends PomocneMetode<Vozi> {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbVozilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbVozac, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbVozac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbVozilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addGap(8, 8, 8)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,11 +388,10 @@ public class FormaVozi extends PomocneMetode<Vozi> {
 
     private void txtTraziKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyReleased
         DefaultListModel<Vozi> model = new DefaultListModel<>();
-        obrada.getVozi(txtTrazi.getText().trim()).forEach(
-                (vozi) -> {
-                    model.addElement(vozi);
-                });
-
+        obrada.getVozi(txtTrazi.getText().trim()).forEach(  //ClassCastException
+                (vozi) -> {                                 //Ljava.lang.Object; cannot be cast to class hlavati.model.Vozi
+                            model.addElement(vozi);
+                          });
         lista.setModel(model);
         lista.repaint();
     }//GEN-LAST:event_txtTraziKeyReleased
