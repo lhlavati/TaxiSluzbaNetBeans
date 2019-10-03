@@ -15,8 +15,12 @@ import java.util.List;
  */
 public class ObradaVozi extends Obrada<Vozi> {
 
-    public List<Vozi> getVozila(){
+    public List<Vozi> getVozi(){
         return session.createQuery("from Vozi").list();
+    }
+    
+    public List<Vozi> getVozi(String uvjet){
+        return session.createQuery("from Vozi a where a.vozac like :uvjet or a.vozilo like :uvjet").setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
     }
     
     @Override
