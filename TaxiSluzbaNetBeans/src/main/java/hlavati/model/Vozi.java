@@ -69,6 +69,10 @@ public class Vozi extends Entitet implements Serializable{
     public void setVozilo(Vozilo vozilo) {
         this.vozilo = vozilo;
     }
-    
+
+    @Override
+    public String toString() {
+        return vozac + "\t vozi \t" + vozilo;
+    }
     
 }
