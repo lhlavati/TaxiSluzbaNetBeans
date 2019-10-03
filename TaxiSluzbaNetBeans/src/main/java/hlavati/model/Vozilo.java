@@ -89,7 +89,7 @@ public class Vozilo extends Entitet implements Serializable {
 
     @Override
     public String toString() {
-        return "" + getMarka();
+        return brojVozila + ", " + marka;
     }
     
 }
