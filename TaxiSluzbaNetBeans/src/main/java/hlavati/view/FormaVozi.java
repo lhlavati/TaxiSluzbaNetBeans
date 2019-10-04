@@ -42,6 +42,7 @@ public class FormaVozi extends PomocneMetode<Vozi> {
         initComponents();
         obrada = new ObradaVozi();
         setTitle(Utility.getNazivAplikacije());
+        rbtnVozac.setSelected(true);
         ucitajVozaca();
         ucitajVozilo();
         ucitaj();
@@ -158,6 +159,7 @@ public class FormaVozi extends PomocneMetode<Vozi> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroup = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
@@ -175,6 +177,8 @@ public class FormaVozi extends PomocneMetode<Vozi> {
         btnObrisi = new javax.swing.JButton();
         txtTrazi = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        rbtnVozac = new javax.swing.JRadioButton();
+        rbtnVozilo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -282,23 +286,36 @@ public class FormaVozi extends PomocneMetode<Vozi> {
 
         jLabel6.setText("Traži");
 
+        btnGroup.add(rbtnVozac);
+        rbtnVozac.setText("Tražim po vozaču");
+
+        btnGroup.add(rbtnVozilo);
+        rbtnVozilo.setText("Tražim po vozilu");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnDodaj)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPromjeni)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnObrisi)))
-                    .addComponent(jLabel6)
-                    .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnDodaj)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPromjeni)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnObrisi))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtTrazi))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbtnVozac)
+                            .addComponent(rbtnVozilo))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
@@ -309,9 +326,15 @@ public class FormaVozi extends PomocneMetode<Vozi> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rbtnVozac)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbtnVozilo)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -320,7 +343,7 @@ public class FormaVozi extends PomocneMetode<Vozi> {
                             .addComponent(btnPromjeni)
                             .addComponent(btnObrisi)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -339,12 +362,7 @@ public class FormaVozi extends PomocneMetode<Vozi> {
             return;
 
         }
-        /*
-        if(s.getGrupe().size()>0){
-                 JOptionPane.showMessageDialog(null, "Ne možete obrisati ovu grupu");
-            return;
-            }
-         */
+        
         if (JOptionPane.showConfirmDialog(
                 null, //roditelj, bude null
                 "Sigurno obrisati?", //tijelo dijaloga
@@ -358,7 +376,7 @@ public class FormaVozi extends PomocneMetode<Vozi> {
         try {
             obrada.brisi(v);
         } catch (MyException ex) {
-            JOptionPane.showMessageDialog(null, ex.getPoruka());
+            JOptionPane.showMessageDialog(null, "Ne možete obrisati parent row! Negdje se već koristi!");
             return;
         }
 
@@ -388,16 +406,27 @@ public class FormaVozi extends PomocneMetode<Vozi> {
 
     private void txtTraziKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyReleased
         DefaultListModel<Vozi> model = new DefaultListModel<>();
-        obrada.getVozi(txtTrazi.getText().trim()).forEach(  //ClassCastException
-                (vozi) -> {                                 //Ljava.lang.Object; cannot be cast to class hlavati.model.Vozi
+        if (rbtnVozac.isSelected()) {
+            obrada.getVoziVozaca(txtTrazi.getText().trim()).forEach(
+                    (vozi) -> {
+                        model.addElement(vozi);
+                    });
+            lista.setModel(model);
+            lista.repaint();
+        } else {
+            obrada.getVoziVozilo(txtTrazi.getText().trim()).forEach(
+                (vozi) -> {
                             model.addElement(vozi);
                           });
         lista.setModel(model);
         lista.repaint();
+        }
+
     }//GEN-LAST:event_txtTraziKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
+    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromjeni;
     private javax.swing.JComboBox<Vozac> cmbVozac;
@@ -413,6 +442,8 @@ public class FormaVozi extends PomocneMetode<Vozi> {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<Vozi> lista;
+    private javax.swing.JRadioButton rbtnVozac;
+    private javax.swing.JRadioButton rbtnVozilo;
     private javax.swing.JTextField txtTrazi;
     // End of variables declaration//GEN-END:variables
 

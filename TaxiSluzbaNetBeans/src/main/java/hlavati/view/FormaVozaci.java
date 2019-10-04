@@ -22,7 +22,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class FormaVozaci extends PomocneMetode<Vozac> {
 
     private ObradaVozac obrada;
-    
+
     /**
      * Creates new form FormaVozaci
      */
@@ -32,21 +32,23 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         obrada = new ObradaVozac();
         ucitaj();
     }
-    
+
     @Override
     protected void ucitaj() {
         DefaultListModel<Vozac> model = new DefaultListModel<>();
-        obrada.getVozaci().forEach((vozac) -> { model.addElement((Vozac) vozac); });
+        obrada.getVozaci().forEach((vozac) -> {
+            model.addElement((Vozac) vozac);
+        });
         lista.setModel(model);
         lista.repaint();
     }
 
     @Override
     protected void spremi(Vozac v) {
-        if(!kontrola(v)){
+        if (!kontrola(v)) {
             return;
         }
-        
+
         try {
             obrada.spremi(v);
         } catch (MyException ex) {
@@ -61,61 +63,62 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     protected boolean kontrola(Vozac v) {
         return kontrolaIme(v) && kontrolaPrezime(v) && kontrolaOIB(v) && kontrolaSpola(v);
     }
-    
-    private boolean kontrolaIme(Vozac v){
-        if(txtIme.getText().trim().length() == 0){
+
+    private boolean kontrolaIme(Vozac v) {
+        if (txtIme.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(null, "Obavezno ime!");
             return false;
         }
-        if(txtIme.getText().matches(".*\\d.*")){
+        if (txtIme.getText().matches(".*\\d.*")) {
             JOptionPane.showMessageDialog(null, "Ime ne može sadržavati broj!");
             return false;
         }
         v.setIme(txtIme.getText());
         return true;
     }
-    
+
     private boolean kontrolaPrezime(Vozac v) {
-        if(txtPrezime.getText().trim().length() == 0){
+        if (txtPrezime.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(null, "Obavezno prezime!");
             return false;
         }
-        if(txtPrezime.getText().matches(".*\\d.*")){
+        if (txtPrezime.getText().matches(".*\\d.*")) {
             JOptionPane.showMessageDialog(null, "Prezime ne može sadržavati broj!");
             return false;
         }
         v.setPrezime(txtPrezime.getText());
         return true;
     }
-    
-    private boolean kontrolaSpola(Vozac v){
-        
-        if(rbtnM.isSelected()){
+
+    private boolean kontrolaSpola(Vozac v) {
+
+        if (rbtnM.isSelected()) {
             v.setSpol(rbtnM.getText());
         }
-        if(rbtnZ.isSelected()){
+        if (rbtnZ.isSelected()) {
             v.setSpol(rbtnZ.getText());
         }
-        if(rbtnO.isSelected()){
+        if (rbtnO.isSelected()) {
             v.setSpol(rbtnO.getText());
         }
-        
+
         return true;
     }
-    
+
     private boolean kontrolaOIB(Vozac v) {
-        if(!checkOIB(txtOIB.getText())){
+        if (!checkOIB(txtOIB.getText())) {
             JOptionPane.showMessageDialog(null, "OIB nije važeći!");
             return false;
         }
         v.setOib(txtOIB.getText());
         return true;
     }
-    
+
     public static boolean checkOIB(String oib) {
 
-        if (oib.length() != 11)
+        if (oib.length() != 11) {
             return false;
+        }
 
         try {
             Long.parseLong(oib);
@@ -125,37 +128,37 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
 
         int a = 10;
         for (int i = 0; i < 10; i++) {
-            a = a + Integer.parseInt(oib.substring(i, i+1));
+            a = a + Integer.parseInt(oib.substring(i, i + 1));
             a = a % 10;
-            if (a == 0)
+            if (a == 0) {
                 a = 10;
+            }
             a *= 2;
             a = a % 11;
         }
         int kontrolni = 11 - a;
-        if (kontrolni == 10)
+        if (kontrolni == 10) {
             kontrolni = 0;
+        }
 
         return kontrolni == Integer.parseInt(oib.substring(10));
     }
-    
-    
+
     @Override
     protected void postaviVrijednosti(Vozac v) {
         txtIme.setText(v.getIme());
         txtPrezime.setText(v.getPrezime());
-        if(v.getSpol().equals(rbtnM.getText())){
+        if (v.getSpol().equals(rbtnM.getText())) {
             rbtnM.setSelected(true);
         }
-        if(v.getSpol().equals(rbtnZ.getText())){
+        if (v.getSpol().equals(rbtnZ.getText())) {
             rbtnZ.setSelected(true);
         }
-        if(v.getSpol().equals(rbtnO.getText())){
+        if (v.getSpol().equals(rbtnO.getText())) {
             rbtnO.setSelected(true);
         }
         txtOIB.setText(v.getOib());
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,6 +186,8 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
         btnDodaj = new javax.swing.JButton();
         btnPromjeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        txtTrazi = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -286,16 +291,30 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
             }
         });
 
+        txtTrazi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTraziKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setText("Traži");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTrazi)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -313,15 +332,20 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnDodaj)
                             .addComponent(btnPromjeni)
                             .addComponent(btnObrisi))
-                        .addGap(0, 28, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addContainerGap(39, Short.MAX_VALUE))))
         );
 
         pack();
@@ -335,38 +359,37 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
         Vozac v = lista.getSelectedValue();
-        if(v==null){
+        if (v == null) {
             JOptionPane.showMessageDialog(null, "Prvo odaberite stavku");
             return;
         }
-        
+
         spremi(v);
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         Vozac v = lista.getSelectedValue();
-        if(v==null){
+        if (v == null) {
             JOptionPane.showMessageDialog(null, "Prvo odaberite stavku");
             return;
         }
-        if(JOptionPane.showConfirmDialog(
+        if (JOptionPane.showConfirmDialog(
                 null, //roditelj, bude null
                 "Sigurno obrisati " + v.getIme() + " " + v.getPrezime() + "?", //tijelo dijaloga
                 "Brisanje smjera", // naslov
                 JOptionPane.YES_NO_OPTION, //vrsta opcija
                 JOptionPane.QUESTION_MESSAGE) //ikona
-                ==JOptionPane.NO_OPTION){
+                == JOptionPane.NO_OPTION) {
             return;
         }
-        
-        
+
         try {
             obrada.brisi(v);
         } catch (MyException ex) {
             JOptionPane.showMessageDialog(null, ex.getPoruka());
             return;
         }
-        
+
         ucitaj();
     }//GEN-LAST:event_btnObrisiActionPerformed
 
@@ -375,11 +398,22 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
             return;
         }
         Vozac v = lista.getSelectedValue();
-        if(v==null){
+        if (v == null) {
             return;
         }
         postaviVrijednosti(v);
     }//GEN-LAST:event_listaValueChanged
+
+    private void txtTraziKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyReleased
+        DefaultListModel<Vozac> model = new DefaultListModel<>();
+        obrada.getVozaci(txtTrazi.getText().trim()).forEach(
+                (vozac) -> {
+                    model.addElement((Vozac) vozac);
+                });
+        lista.setModel(model);
+        lista.repaint();
+
+    }//GEN-LAST:event_txtTraziKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
@@ -390,6 +424,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Vozac> lista;
@@ -399,6 +434,7 @@ public class FormaVozaci extends PomocneMetode<Vozac> {
     private javax.swing.JTextField txtIme;
     private javax.swing.JTextField txtOIB;
     private javax.swing.JTextField txtPrezime;
+    private javax.swing.JTextField txtTrazi;
     // End of variables declaration//GEN-END:variables
 
 }
