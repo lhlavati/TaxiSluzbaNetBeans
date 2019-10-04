@@ -108,6 +108,10 @@ public class Voznja extends Entitet implements Serializable{
     public void setVozi(Vozi vozi) {
         this.vozi = vozi;
     }
-    
+
+    @Override
+    public String toString() {
+        return adresaPolazista + " - " + adresaOdredista + ", Broj putnika: " + brojPutnika;
+    }
     
 }
