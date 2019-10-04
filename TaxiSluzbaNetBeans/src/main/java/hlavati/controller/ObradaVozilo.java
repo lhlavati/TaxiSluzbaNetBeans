@@ -19,6 +19,11 @@ public class ObradaVozilo extends Obrada<Vozilo> {
         return session.createQuery("from Vozilo").list();
     }
     
+    public List<Vozilo> getVozila(String uvjet){
+        return session.createQuery("from Vozilo a where a.marka like :uvjet or a.brojVozila like :uvjet")
+                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+    }
+    
     @Override
     protected void kontrolaSpremi() throws MyException {
         Vozilo vozilo = new Vozilo();

@@ -19,6 +19,12 @@ public class ObradaVoznja extends Obrada<Voznja> {
         return session.createQuery("from Voznja").list();
     }
     
+    public List<Voznja> getVoznje(String uvjet){
+        return session.createQuery("from Voznja a where a.adresaOdredista like :uvjet " + 
+                                   "or a.adresaPolazista like :uvjet")
+                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+    }
+    
     @Override
     protected void kontrolaSpremi() throws MyException {
         

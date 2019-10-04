@@ -21,6 +21,11 @@ public class ObradaVozac<T extends Vozac> extends Obrada<T> {
         return session.createQuery("from Vozac").list();
     }
     
+    public List<Vozac> getVozaci(String uvjet){
+        return session.createQuery("from Vozac a where a.ime like :uvjet or a.prezime like :uvjet")
+                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+    }
+    
     @Override
     protected void kontrolaSpremi() throws MyException {
         

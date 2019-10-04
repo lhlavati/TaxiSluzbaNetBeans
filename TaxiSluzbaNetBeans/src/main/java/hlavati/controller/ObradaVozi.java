@@ -19,11 +19,21 @@ public class ObradaVozi extends Obrada<Vozi> {
         return session.createQuery("from Vozi").list();
     }
     
-    public List<Vozi> getVozi(String uvjet){
-        return session.createQuery("from Vozi as a inner join a.vozac " +
-                                   "inner join a.vozilo " + 
-                                   "where a.vozac.ime like :uvjet or a.vozac.prezime like :uvjet " +
-                                   "or a.vozilo.brojVozila like :uvjet or a.vozilo.marka like :uvjet")
+//    public List<Vozi> getVozi(String uvjet){
+//        return session.createQuery("from Vozi as a inner join a.vozac " +
+//                                   "inner join a.vozilo " + 
+//                                   "where a.vozac.ime like :uvjet or a.vozac.prezime like :uvjet " +
+//                                   "or a.vozilo.brojVozila like :uvjet or a.vozilo.marka like :uvjet")
+//                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+//    }
+    
+    public List<Vozi> getVoziVozaca(String uvjet){
+        return session.createQuery("from Vozi a where a.vozac.ime like :uvjet or a.vozac.prezime like :uvjet")
+                                   .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
+    }
+    
+    public List<Vozi> getVoziVozilo(String uvjet){
+        return session.createQuery("from Vozi a where a.vozilo.marka like :uvjet or a.vozilo.brojVozila like :uvjet")
                                    .setParameter("uvjet", "%" + uvjet + "%").setMaxResults(20).list();
     }
     
