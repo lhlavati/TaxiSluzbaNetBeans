@@ -5,11 +5,15 @@
  */
 package hlavati.view;
 
+import hlavati.controller.ObradaVozi;
 import hlavati.controller.ObradaVoznja;
 import hlavati.model.Voznja;
 import hlavati.model.Vozi;
 import hlavati.utility.MyException;
 import hlavati.utility.Utility;
+import java.math.BigDecimal;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -20,6 +24,7 @@ import javax.swing.JOptionPane;
 public class FormaVoznje extends PomocneMetode<Voznja> {
 
     private ObradaVoznja obrada;
+
     /**
      * Creates new form FormaVoznje
      */
@@ -27,9 +32,12 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
         initComponents();
         obrada = new ObradaVoznja();
         setTitle(Utility.getNazivAplikacije());
+        dtpPocetak.setDateTimeStrict(Utility.convertToLocalDateTimeViaInstant(new Date()));
+        dtpKraj.setDateTimeStrict(Utility.convertToLocalDateTimeViaInstant(new Date()));
+        ucitajVozi();
         ucitaj();
     }
-    
+
     @Override
     protected void ucitaj() {
         DefaultListModel<Voznja> model = new DefaultListModel<>();
@@ -43,18 +51,110 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
     }
 
     @Override
-    protected void spremi(Voznja entitet) {
-        
+    protected void spremi(Voznja v) {
+        if (!kontrola(v)) {
+            return;
+        }
+
+        v.setBrojMob(txtBrojMobitela.getText());
+        v.setBrojPutnika((int) spBrojPutnika.getValue());
+
+        try {
+            obrada.spremi(v);
+        } catch (MyException ex) {
+            JOptionPane.showMessageDialog(null, ex.getPoruka());
+            return;
+        }
+
+        ucitaj();
     }
 
     @Override
-    protected boolean kontrola(Voznja entitet) {
+    protected boolean kontrola(Voznja v) {
+        return kontrolaPolaziste(v) && kontrolaOdrediste(v) && kontrolaCijene(v) && kontrolaDatumPocetka(v) && kontrolaDatumKraja(v) && kontrolaVozi(v);
+    }
+
+    private boolean kontrolaPolaziste(Voznja v) {
+        if (txtPolaziste.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Obavezna adresa polazista!");
+            return false;
+        }
+        v.setAdresaPolazista(txtPolaziste.getText());
+        return true;
+    }
+
+    private boolean kontrolaOdrediste(Voznja v) {
+        if (txtOdrediste.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Obavezna adresa odredišta!");
+            return false;
+        }
+        v.setAdresaOdredista(txtOdrediste.getText());
+        return true;
+    }
+
+    private boolean kontrolaCijene(Voznja v) {
+        if (txtCijena.getText().trim().matches("^[a-zA-Z]*$")) {
+            JOptionPane.showMessageDialog(null, "Cijena mora biti broj!");
+            return false;
+        }
+
+        if (new BigDecimal(txtCijena.getText()).compareTo(BigDecimal.ZERO) < 0) {
+            JOptionPane.showMessageDialog(null, "Cijena mora biti veća od 0!");
+            return false;
+        }
+        try {
+            v.setCijena(new BigDecimal(txtCijena.getText()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cijena nije važeća!");
+        }
+        return true;
+    }
+
+    private boolean kontrolaDatumPocetka(Voznja v) {
+        if (dtpPocetak.getDateTimeStrict() == null) {
+            JOptionPane.showMessageDialog(null, "Obavezan unos vremena pocetka voznje!");
+            return false;
+        }
+        v.setPocetakVoznje(Utility.convertToDateViaSqlTimestamp(dtpPocetak.getDateTimeStrict()));
+        return true;
+    }
+
+    private boolean kontrolaDatumKraja(Voznja v) {
+        if (dtpKraj.getDateTimeStrict() == null) {
+            JOptionPane.showMessageDialog(null, "Obavezan unos vremena kraja voznje!");
+            return false;
+        }
+        v.setKrajVoznje(Utility.convertToDateViaSqlTimestamp(dtpKraj.getDateTimeStrict()));
+        return true;
+    }
+
+    private boolean kontrolaVozi(Voznja v) {
+        if (cmbVozi.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Odabavezan odabir Vozi!");
+            return false;
+        }
+        v.setVozi((Vozi) cmbVozi.getSelectedItem());
         return true;
     }
 
     @Override
-    protected void postaviVrijednosti(Voznja entitet) {
-        
+    protected void postaviVrijednosti(Voznja v) {
+        txtPolaziste.setText(v.getAdresaPolazista());
+        txtOdrediste.setText(v.getAdresaOdredista());
+        txtBrojMobitela.setText(v.getBrojMob() == null ? "" : v.getBrojMob().trim());
+        txtCijena.setText(v.getCijena() == null ? "" : v.getCijena().toString());
+        spBrojPutnika.setValue(v.getBrojPutnika());
+        dtpPocetak.setDateTimeStrict(Utility.convertToLocalDateTimeViaInstant(v.getPocetakVoznje()));
+        dtpKraj.setDateTimeStrict(Utility.convertToLocalDateTimeViaInstant(v.getKrajVoznje()));
+        cmbVozi.setSelectedItem(v.getVozi());
+    }
+
+    private void ucitajVozi() {
+        DefaultComboBoxModel<Vozi> m = new DefaultComboBoxModel<>();
+        new ObradaVozi().getVozi().forEach((vozi) -> {
+            m.addElement(vozi);
+        });
+        cmbVozi.setModel(m);
     }
 
     /**
@@ -102,13 +202,18 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
 
         jLabel5.setText("Cijena");
 
+        lista.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lista);
 
         jLabel6.setText("Početak vožnje");
 
         jLabel7.setText("Kraj vožnje");
 
-        jLabel8.setText("Vozi");
+        jLabel8.setText("Vozac, vozilo");
 
         spBrojPutnika.setModel(new javax.swing.SpinnerNumberModel(1, 1, 4, 1));
 
@@ -135,13 +240,19 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
 
         jLabel9.setText("Traži");
 
+        txtTrazi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTraziKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -175,9 +286,8 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnObrisi))
                             .addComponent(jLabel9)
-                            .addComponent(txtTrazi))
-                        .addGap(0, 141, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(txtTrazi))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,40 +348,61 @@ public class FormaVoznje extends PomocneMetode<Voznja> {
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
         Voznja v = lista.getSelectedValue();
-        if(v==null){
+        if (v == null) {
             JOptionPane.showMessageDialog(null, "Prvo odaberite stavku");
             return;
         }
-        
+
         spremi(v);
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         Voznja v = lista.getSelectedValue();
-        if(v==null){
+        if (v == null) {
             JOptionPane.showMessageDialog(null, "Prvo odaberite stavku");
             return;
         }
-        if(JOptionPane.showConfirmDialog(
+        if (JOptionPane.showConfirmDialog(
                 null, //roditelj, bude null
                 "Sigurno obrisati?", //tijelo dijaloga
                 "Brisanje smjera", // naslov
                 JOptionPane.YES_NO_OPTION, //vrsta opcija
                 JOptionPane.QUESTION_MESSAGE) //ikona
-                ==JOptionPane.NO_OPTION){
+                == JOptionPane.NO_OPTION) {
             return;
         }
-        
-        
+
         try {
             obrada.brisi(v);
         } catch (MyException ex) {
             JOptionPane.showMessageDialog(null, ex.getPoruka());
             return;
         }
-        
+
         ucitaj();
     }//GEN-LAST:event_btnObrisiActionPerformed
+
+    private void listaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaValueChanged
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
+        Voznja v = lista.getSelectedValue();
+        if (v == null) {
+            return;
+        }
+        postaviVrijednosti(v);
+    }//GEN-LAST:event_listaValueChanged
+
+    private void txtTraziKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyReleased
+        DefaultListModel<Voznja> model = new DefaultListModel<>();
+        obrada.getVoznje(txtTrazi.getText().trim()).forEach(
+                (voznja) -> {
+                    model.addElement(voznja);
+                });
+
+        lista.setModel(model);
+        lista.repaint();
+    }//GEN-LAST:event_txtTraziKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;

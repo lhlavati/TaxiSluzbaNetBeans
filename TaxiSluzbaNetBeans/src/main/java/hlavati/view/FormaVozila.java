@@ -28,6 +28,7 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
         initComponents();
         setTitle(Utility.getNazivAplikacije() + " Vozila");
         obrada = new ObradaVozilo();
+        rbtnDiesel.setSelected(true);
         ucitaj();
     }
     
@@ -63,11 +64,6 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
     
     
     private boolean kontrolaGodista(Vozilo v) {
-        if(txtGodiste.getText().trim().length() == 0){
-            JOptionPane.showMessageDialog(null, "Obavezan unos godišta!");
-            txtGodiste.requestFocus();
-            return false;
-        }
         v.setGodiste(txtGodiste.getText());
         return true;
     }
@@ -83,49 +79,43 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
     }
 
     private boolean kontrolaGoriva(Vozilo v) {
-        if(txtGorivo.getText().trim().length() == 0){
-            JOptionPane.showMessageDialog(null, "Obavezan unos vrste goriva!");
-            txtGorivo.requestFocus();
-            return false;
+        if(rbtnDiesel.isSelected()){
+            v.setGorivo(rbtnDiesel.getText());
         }
-        v.setGorivo(txtGorivo.getText());
+        if(rbtnBenzin.isSelected()){
+            v.setGorivo(rbtnBenzin.getText());
+        }
+        if(rbtnStruja.isSelected()){
+            v.setGorivo(rbtnStruja.getText());
+        }
         return true;
     }
 
     private boolean kontrolaSnage(Vozilo v) {
-        if(txtSnaga.getText().trim().length() == 0){
-            JOptionPane.showMessageDialog(null, "Obavezan unos snage!");
-            txtSnaga.requestFocus();
-            return false;
-        }
         v.setSnaga(txtSnaga.getText());
         return true;
     }
 
     private boolean kontrolaBrojaVozila(Vozilo v) {
-        if(txtBrojVozila.getText().trim().length() == 0){
-            JOptionPane.showMessageDialog(null, "Obavezan unos broja vozila!");
-            txtBrojVozila.requestFocus();
-            return false;
-        }
-        
-        try {
-            v.setBrojVozila(Integer.parseInt(txtBrojVozila.getText()));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Broj vozila mora biti broj!");
-            txtBrojVozila.requestFocus();
-            return false;
-        }
+        v.setBrojVozila((Integer) spBrojVozila.getValue());
         return true;
     }
 
     @Override
     protected void postaviVrijednosti(Vozilo v) {
         txtMarka.setText(v.getMarka());
-        txtGorivo.setText(v.getGorivo());
-        txtGodiste.setText(v.getGodiste());
-        txtSnaga.setText(v.getSnaga());
-        txtBrojVozila.setText(v.getBrojVozila() == null ? "" : v.getBrojVozila().toString());
+        if (v.getGorivo().equals(rbtnDiesel.getText())) {
+            rbtnDiesel.setSelected(true);
+        }
+        if (v.getGorivo().equals(rbtnBenzin.getText())) {
+            rbtnBenzin.setSelected(true);
+        }
+        if (v.getGorivo().equals(rbtnStruja.getText())) {
+            rbtnStruja.setSelected(true);
+        }
+        txtGodiste.setText(v.getGodiste() == null ? "" : v.getGodiste());
+        txtSnaga.setText(v.getSnaga() == null ? "" : v.getSnaga());
+        spBrojVozila.setValue(v.getBrojVozila() == null ? "" : (Integer) v.getBrojVozila());
         chkABS.setSelected(v.isAbs());
     }
 
@@ -138,6 +128,7 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList<>();
         btnDodaj = new javax.swing.JButton();
@@ -147,14 +138,18 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
         jLabel1 = new javax.swing.JLabel();
         txtMarka = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtGorivo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtGodiste = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtBrojVozila = new javax.swing.JTextField();
         chkABS = new javax.swing.JCheckBox();
         txtSnaga = new javax.swing.JTextField();
+        spBrojVozila = new javax.swing.JSpinner();
+        rbtnDiesel = new javax.swing.JRadioButton();
+        rbtnBenzin = new javax.swing.JRadioButton();
+        rbtnStruja = new javax.swing.JRadioButton();
+        txtTrazi = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -201,56 +196,84 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
 
         chkABS.setText("ABS");
 
+        spBrojVozila.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+
+        btnGroup.add(rbtnDiesel);
+        rbtnDiesel.setText("Diesel");
+
+        btnGroup.add(rbtnBenzin);
+        rbtnBenzin.setText("Benzin");
+
+        btnGroup.add(rbtnStruja);
+        rbtnStruja.setText("Struja");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(txtMarka, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(txtGodiste, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtSnaga))
-                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2)
-                        .addComponent(txtGorivo, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtBrojVozila))
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3)
+                        .addComponent(txtMarka, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addComponent(txtGodiste, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtSnaga))
+                    .addComponent(jLabel4)
+                    .addComponent(spBrojVozila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnDiesel)
+                    .addComponent(rbtnBenzin)
+                    .addComponent(jLabel2)
+                    .addComponent(rbtnStruja)
                     .addComponent(chkABS))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMarka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtGorivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtMarka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbtnDiesel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(rbtnBenzin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtGodiste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBrojVozila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(rbtnStruja))
+                .addGap(4, 4, 4)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chkABS)
-                    .addComponent(txtSnaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSnaga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkABS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spBrojVozila, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        txtTrazi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTraziKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setText("Traži");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,14 +281,20 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTrazi)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(btnDodaj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPromjeni)
@@ -278,7 +307,12 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTrazi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -345,8 +379,19 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
         ucitaj();
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void txtTraziKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTraziKeyReleased
+        DefaultListModel<Vozilo> model = new DefaultListModel<>();
+        obrada.getVozila(txtTrazi.getText().trim()).forEach(
+            (vozilo) -> {
+                model.addElement(vozilo);
+            });
+            lista.setModel(model);
+            lista.repaint();
+    }//GEN-LAST:event_txtTraziKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
+    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromjeni;
     private javax.swing.JCheckBox chkABS;
@@ -355,14 +400,18 @@ public class FormaVozila extends PomocneMetode<Vozilo> {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Vozilo> lista;
-    private javax.swing.JTextField txtBrojVozila;
+    private javax.swing.JRadioButton rbtnBenzin;
+    private javax.swing.JRadioButton rbtnDiesel;
+    private javax.swing.JRadioButton rbtnStruja;
+    private javax.swing.JSpinner spBrojVozila;
     private javax.swing.JTextField txtGodiste;
-    private javax.swing.JTextField txtGorivo;
     private javax.swing.JTextField txtMarka;
     private javax.swing.JTextField txtSnaga;
+    private javax.swing.JTextField txtTrazi;
     // End of variables declaration//GEN-END:variables
 
 }
